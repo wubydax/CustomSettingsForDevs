@@ -211,11 +211,18 @@ public class HandlePreferenceFragments implements SharedPreferences.OnSharedPref
                 String prefString = prefs.getString(key, "");
                 String actualString = Settings.System.getString(cr, key);
                 String t = (actualString == null) ? prefString : actualString;
-
+                /*Big fix for the annoying and elusive IndexOutOfBoundsException on first install
+                * Although the error never came back afterwards, it included copied out of bounds values to db
+                * I had to catch exception and set boolean value accordingly to use it later on
+                * That implies that on first install the summary for the first screen list preference will not be set
+                * After that it will be just fine. No biggie for a great cause of not wiping my device anymore to try and catch the bastard*/
                 try {
                     if (p instanceof MyListPreference) {
                         MyListPreference mlp = (MyListPreference) pf.findPreference(key);
                         CharSequence[] entries = mlp.getEntries();
+                        //we specifically create string using the index. If it's out of bounds the string will be null
+                        //And we have exception on index out of bounds
+                        //Boolean isOutOfBounds returns false if "try" succeeded
                         String s = (String) entries[mlp.findIndexOfValue(t)];
                         Log.d("listview index", s);
                         isOutOfBounds = false;
@@ -223,11 +230,12 @@ public class HandlePreferenceFragments implements SharedPreferences.OnSharedPref
 
                 } catch (IndexOutOfBoundsException e) {
                     Log.d("listview index", "exception");
-
+                    //boolean isOutOfBounds returns tru if exception was caught
                     isOutOfBounds = true;
 
                 }
                 if (p instanceof MyListPreference) {
+                    //Any action on the rouge list preference will be performed only if there was no exception
                     if (!isOutOfBounds) {
                         if (actualString == null) {
                             Settings.System.putString(cr, key, prefString);
@@ -286,7 +294,7 @@ public class HandlePreferenceFragments implements SharedPreferences.OnSharedPref
             case "MyListPreference":
                 MyListPreference l = (MyListPreference) pf.findPreference(key);
                 String lValue = sharedPreferences.getString(key, "");
-
+                //Any action on the rouge list preference will be performed only if there was no exception
                 if (!isOutOfBounds) {
                     CharSequence[] mEntries = l.getEntries();
                     int mValueIndex = l.findIndexOfValue(lValue);
