@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/android:windowBackground">
+
+        <include
+            android:id="@+id/toolbar_actionbar"
+            layout="@layout/toolbar_default"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true" />
+
+
+        <RelativeLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar_actionbar"
+            android:clickable="true">
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/overlay"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#bbffffff"
+            android:fitsSystemWindows="true"
+            android:elevation="5dp"
+            android:onClick="onClick"/>
+
+        <com.software.shell.fab.ActionButton
+            android:id="@+id/action_reboot_systemUI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:onClick="onClick"
+            app:button_color="?attr/colorPrimary"
+            app:button_colorRipple="?attr/colorAccent"
+            app:stroke_width="1.5dp"
+            app:stroke_color="?attr/colorAccent"
+            app:image="@drawable/ic_reboot_ui"
+            app:image_size="27dp"
+            app:rippleEffect_enabled="true"
+            app:shadow_radius="0dp"
+             android:elevation="6dp"/>
+
+        <com.software.shell.fab.ActionButton
+            android:id="@+id/action_reboot_bl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/action_reboot_systemUI"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:onClick="onClick"
+            app:button_color="?attr/colorAccent"
+            app:button_colorRipple="?attr/colorPrimary"
+            app:stroke_width="1.5dp"
+            app:stroke_color="?attr/colorPrimary"
+            app:image="@drawable/ic_reboot_bl"
+            app:image_size="27dp"
+            app:rippleEffect_enabled="true"
+            app:shadow_radius="0dp"
+            android:elevation="6dp"/>
+
+        <com.software.shell.fab.ActionButton
+            android:id="@+id/action_reboot_recovery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/action_reboot_bl"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:onClick="onClick"
+            app:button_color="?attr/colorPrimary"
+            app:button_colorRipple="?attr/colorAccent"
+            app:stroke_width="1.5dp"
+            app:stroke_color="?attr/colorAccent"
+            app:image="@drawable/ic_reboot_recovery"
+            app:image_size="27dp"
+            app:rippleEffect_enabled="true"
+            app:shadow_radius="0dp"
+            android:elevation="6dp" />
+
+        <com.software.shell.fab.ActionButton
+            android:id="@+id/action_reboot_hotboot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/action_reboot_recovery"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:onClick="onClick"
+            app:button_color="?attr/colorAccent"
+            app:button_colorRipple="?attr/colorPrimary"
+            app:stroke_width="1.5dp"
+            app:stroke_color="?attr/colorPrimary"
+            app:image="@drawable/ic_hotboot"
+            app:image_size="27dp"
+            app:rippleEffect_enabled="true"
+            app:shadow_radius="0dp"
+            android:elevation="6dp" />
+
+        <com.software.shell.fab.ActionButton
+            android:id="@+id/action_reboot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/action_reboot_hotboot"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:onClick="onClick"
+            app:button_color="?attr/colorPrimary"
+            app:button_colorRipple="?attr/colorAccent"
+            app:stroke_width="1.5dp"
+            app:stroke_color="?attr/colorAccent"
+            app:image="@drawable/ic_reboot"
+            app:image_size="27dp"
+            app:rippleEffect_enabled="true"
+            app:shadow_radius="0dp"
+            android:elevation="6dp" />
+
+
+    </RelativeLayout>
+    <!-- android:layout_marginTop="?android:attr/actionBarSize"-->
+    <com.wubydax.romcontrol.ScrimInsetsFrameLayout
+        android:id="@+id/scrimInsetsFrameLayout"
+        android:layout_width="@dimen/navigation_drawer_width"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:elevation="10dp"
+        android:fitsSystemWindows="true"
+        app:insetForeground="#4000">
+
+        <fragment
+            android:id="@+id/fragment_drawer"
+            android:name="com.wubydax.romcontrol.NavigationDrawerFragment"
+            android:layout_width="@dimen/navigation_drawer_width"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:layout="@layout/fragment_navigation_drawer" />
+    </com.wubydax.romcontrol.ScrimInsetsFrameLayout>
+
+
+</android.support.v4.widget.DrawerLayout>

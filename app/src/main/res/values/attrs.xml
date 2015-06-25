@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ScrimInsetsView">
+        <attr name="insetForeground" format="reference|color" />
+    </declare-styleable>
+    <declare-styleable name="NavDrawerIcon">
+        <attr name="tint" format="reference|color" />
+    </declare-styleable>
+    <!--<declare-styleable name=""-->
+<attr name="nav_drawer_bg_color" format="color"/>
+    <attr name="myAccentColor" format="color"/>
+<attr name="nav_item_color_selector" format="reference|color"/>
+    <attr name="nav_drawer_header" format="reference"/>
+</resources>

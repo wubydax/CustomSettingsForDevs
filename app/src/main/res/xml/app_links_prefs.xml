@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceScreen
+        android:key="com.android.settings.Settings"
+        android:summary="Opens your device Settings"
+        android:title="Open Settings" />
+    <PreferenceScreen
+        android:key="com.wubydax.geartwswipe.ResetDialogActivity"
+        android:summary="Opens TWSwipe app to help you choose a different swipe activity"
+        android:title="Reset TWSwipe Action" />
+    <PreferenceScreen
+        android:key="com.wubydax.gearreboot.RebootActivity"
+        android:summary="Opens TWSwipe app to help you choose a different swipe activity"
+        android:title="Reset TWSwipe Action" />
+    <PreferenceScreen
+        android:key="com.bogus.bogus"
+        android:summary="Tries to open bogus app"
+        android:title="Open bogus app" />
+    <PreferenceScreen android:title="More Links" android:summary="Click for more links to apps">
+        <PreferenceScreen
+            android:key="com.android.settings.Settings"
+            android:summary="Opens your device Settings"
+            android:title="Open Settings" />
+    </PreferenceScreen>
+    <PreferenceScreen
+        android:key="com.bogus.bogus"
+        android:summary="Tries to open bogus app"
+        android:title="Open bogus app" />
+    <com.wubydax.romcontrol.MyListPreference
+        android:defaultValue="2"
+        android:entries="@array/some_entries"
+        android:entryValues="@array/some_values"
+        android:key="another_some_position"
+        android:title="Some Position" />
+</PreferenceScreen>
