@@ -393,19 +393,19 @@ public class HandlePreferenceFragments implements SharedPreferences.OnSharedPref
             }
 
         } else if (preference.getKey() == null) {
-            setToolbarForNested(preference);
+//            setToolbarForNested(preference);
         }
         return true;
     }
 
-    private void setToolbarForNested(Preference p) {
-        PreferenceScreen ps = (PreferenceScreen) p;
-        Dialog d = ps.getDialog();
-        android.support.v7.widget.Toolbar tb;
-        LinearLayout ll = (LinearLayout) d.findViewById(android.R.id.list).getParent();
-        tb = (android.support.v7.widget.Toolbar) LayoutInflater.from(c).inflate(R.layout.toolbar_default, ll, false);
-        ll.addView(tb, 0);
-
-    }
+//    private void setToolbarForNested(Preference p) {
+//        PreferenceScreen ps = (PreferenceScreen) p;
+//        Dialog d = ps.getDialog();
+//        android.support.v7.widget.Toolbar tb;
+//        LinearLayout ll = (LinearLayout) d.findViewById(android.R.id.list).getParent();
+//        tb = (android.support.v7.widget.Toolbar) LayoutInflater.from(c).inflate(R.layout.toolbar_default, ll, false);
+//        ll.addView(tb, 0);
+//
+//    }
 
 }
