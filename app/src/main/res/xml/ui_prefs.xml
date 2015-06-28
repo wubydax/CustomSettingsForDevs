@@ -17,7 +17,7 @@
             android:defaultValue="2"
             android:entries="@array/clock_position_entries"
             android:entryValues="@array/clock_position_values"
-            android:key="clock_position"
+            android:key="any_clock_position"
             android:title="Status Bar Clock Position" />
         <com.wubydax.romcontrol.MyEditTextPreference
             android:defaultValue="simpletext"

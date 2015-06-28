@@ -178,16 +178,16 @@ public class IntentDialogPreference extends DialogPreference implements AdapterV
         return appName;
     }
 
-    private List<ApplicationInfo> createAppList(PackageManager pm, final List<ApplicationInfo> list) {
+    private List<ApplicationInfo> createAppList() {
         ArrayList<ApplicationInfo> appList = new ArrayList<ApplicationInfo>();
+        List<ApplicationInfo> list = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+        int l = list.size();
 
-
-        for (ApplicationInfo mAppInfo : list) {
+        for (int i=0; i<l; i++) {
             try {
-                if (pm.getLaunchIntentForPackage(mAppInfo.packageName) == null) {
-                    continue;
+                if (pm.getLaunchIntentForPackage(list.get(i).packageName) != null) {
+                    appList.add(list.get(i));
                 }
-                appList.add(mAppInfo);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -239,7 +239,7 @@ public class IntentDialogPreference extends DialogPreference implements AdapterV
 
             @Override
             protected Void doInBackground(Void... params) {
-                mAppList = createAppList(pm, pm.getInstalledApplications(PackageManager.GET_META_DATA));
+                mAppList = createAppList();
                 Collections.sort(mAppList, new Comparator<ApplicationInfo>() {
 
                     @Override
