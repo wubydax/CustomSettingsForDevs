@@ -56,7 +56,8 @@ import java.util.Set;
 public class IntentDialogPreference extends DialogPreference implements AdapterView.OnItemClickListener {
     String mValue, mSummary;
     Drawable appIcon;
-    String separator = "##";
+    String separator;
+    boolean isSearch;
     Context c;
     PackageManager pm;
     ApplicationInfo ai;
@@ -72,8 +73,17 @@ public class IntentDialogPreference extends DialogPreference implements AdapterV
         super(context, attrs);
         this.c = context;
         pm = c.getPackageManager();
+        separator = getStringForAttr(attrs, null, "setSeparatorString", "/");
+        isSearch = attrs.getAttributeBooleanValue(null, "includeSearch", false);
         setDialogLayoutResource(R.layout.intent_dialog_layout);
         setWidgetLayoutResource(R.layout.intent_preference_app_icon);
+    }
+
+    private String getStringForAttr(AttributeSet attrs, String ns, String attrName, String defaultValue) {
+        String value = attrs.getAttributeValue(ns, attrName);
+        if (value == null)
+            value = defaultValue;
+        return value;
     }
 
     @Override
@@ -94,24 +104,29 @@ public class IntentDialogPreference extends DialogPreference implements AdapterV
         lv.setDivider(null);
         lv.setDividerHeight(0);
         lv.setScrollingCacheEnabled(false);
-        search = (EditText) view.findViewById(R.id.searchApp);
         pb = (ProgressBar) view.findViewById(R.id.progressBar);
-        createList();
-        search.addTextChangedListener(new TextWatcher() {
+        if (isSearch) {
+            search = (EditText) view.findViewById(R.id.searchApp);
+            search.setVisibility(View.VISIBLE);
+            createList();
+            search.addTextChangedListener(new TextWatcher() {
 
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                appListAdapter.getFilter().filter(s);
-            }
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    appListAdapter.getFilter().filter(s);
+                }
 
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
+                @Override
+                public void afterTextChanged(Editable s) {
+                }
+            });
+        } else {
+            createList();
+        }
 
 
     }
@@ -183,7 +198,7 @@ public class IntentDialogPreference extends DialogPreference implements AdapterV
         List<ApplicationInfo> list = pm.getInstalledApplications(PackageManager.GET_META_DATA);
         int l = list.size();
 
-        for (int i=0; i<l; i++) {
+        for (int i = 0; i < l; i++) {
             try {
                 if (pm.getLaunchIntentForPackage(list.get(i).packageName) != null) {
                     appList.add(list.get(i));

@@ -39,8 +39,7 @@
             android:icon="@null"
             android:key="network_traffic_autohide_threshold"
             android:max="100"
-            android:title="Autohide Threshold"
-            />
+            android:title="Autohide Threshold" />
         <PreferenceScreen
 
             android:summary="New Preference screen"
@@ -53,7 +52,11 @@
                 android:key="test_switch"
                 android:title="Switch" />
         </PreferenceScreen>
-        <com.wubydax.romcontrol.IntentDialogPreference android:title="Choose App" android:key="choosen_app_gear"/>
+        <com.wubydax.romcontrol.IntentDialogPreference
+            includeSearch="true"
+            setSeparatorString="\##"
+            android:key="choosen_app_gear"
+            android:title="Choose App" />
 
 
     </PreferenceCategory>

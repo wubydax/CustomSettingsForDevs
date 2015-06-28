@@ -15,7 +15,8 @@
         android:layout_marginTop="16dp"
         android:backgroundTint="?attr/colorAccent"
         android:backgroundTintMode="src_in"
-        android:hint="Find App" />
+        android:hint="Find App"
+        android:visibility="gone" />
 
     <ListView
         android:id="@+id/appsList"
