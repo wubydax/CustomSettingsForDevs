@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.preference.CheckBoxPreference;
@@ -329,7 +330,7 @@ public class HandlePreferenceFragments implements SharedPreferences.OnSharedPref
             isEnabled = sp.getBoolean(key, true);
             dbInt = (isEnabled) ? 1 : 0;
             Settings.System.putInt(cr, key, dbInt);
-        } else if (o instanceof MyEditTextPreference || o instanceof MyListPreference) {
+        } else if (o instanceof MyEditTextPreference || o instanceof MyListPreference || o instanceof IntentDialogPreference) {
             value = sp.getString(key, "");
             Settings.System.putString(cr, key, value);
         } else if (o instanceof ColorPickerPreference) {

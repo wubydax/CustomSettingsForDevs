@@ -53,6 +53,7 @@
                 android:key="test_switch"
                 android:title="Switch" />
         </PreferenceScreen>
+        <com.wubydax.romcontrol.IntentDialogPreference android:title="Choose App" android:key="choosen_app_gear"/>
 
 
     </PreferenceCategory>

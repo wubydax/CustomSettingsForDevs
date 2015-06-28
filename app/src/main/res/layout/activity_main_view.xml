@@ -4,8 +4,7 @@
     android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    >
+    android:fitsSystemWindows="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -28,15 +27,16 @@
             android:clickable="true">
 
         </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/overlay"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#bbffffff"
-            android:fitsSystemWindows="true"
             android:elevation="5dp"
-            android:onClick="onClick"/>
+            android:fitsSystemWindows="true"
+            android:onClick="onClick"
+            android:visibility="gone" />
 
         <com.software.shell.fab.ActionButton
             android:id="@+id/action_reboot_systemUI"
@@ -46,16 +46,16 @@
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="16dp"
             android:layout_marginRight="16dp"
+            android:elevation="6dp"
             android:onClick="onClick"
             app:button_color="?attr/colorPrimary"
             app:button_colorRipple="?attr/colorAccent"
-            app:stroke_width="1.5dp"
-            app:stroke_color="?attr/colorAccent"
             app:image="@drawable/ic_reboot_ui"
             app:image_size="27dp"
             app:rippleEffect_enabled="true"
             app:shadow_radius="0dp"
-             android:elevation="6dp"/>
+            app:stroke_color="?attr/colorAccent"
+            app:stroke_width="1.5dp" />
 
         <com.software.shell.fab.ActionButton
             android:id="@+id/action_reboot_bl"
@@ -65,16 +65,16 @@
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="16dp"
             android:layout_marginRight="16dp"
+            android:elevation="6dp"
             android:onClick="onClick"
             app:button_color="?attr/colorAccent"
             app:button_colorRipple="?attr/colorPrimary"
-            app:stroke_width="1.5dp"
-            app:stroke_color="?attr/colorPrimary"
             app:image="@drawable/ic_reboot_bl"
             app:image_size="27dp"
             app:rippleEffect_enabled="true"
             app:shadow_radius="0dp"
-            android:elevation="6dp"/>
+            app:stroke_color="?attr/colorPrimary"
+            app:stroke_width="1.5dp" />
 
         <com.software.shell.fab.ActionButton
             android:id="@+id/action_reboot_recovery"
@@ -84,16 +84,16 @@
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="16dp"
             android:layout_marginRight="16dp"
+            android:elevation="6dp"
             android:onClick="onClick"
             app:button_color="?attr/colorPrimary"
             app:button_colorRipple="?attr/colorAccent"
-            app:stroke_width="1.5dp"
-            app:stroke_color="?attr/colorAccent"
             app:image="@drawable/ic_reboot_recovery"
             app:image_size="27dp"
             app:rippleEffect_enabled="true"
             app:shadow_radius="0dp"
-            android:elevation="6dp" />
+            app:stroke_color="?attr/colorAccent"
+            app:stroke_width="1.5dp" />
 
         <com.software.shell.fab.ActionButton
             android:id="@+id/action_reboot_hotboot"
@@ -103,16 +103,16 @@
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="16dp"
             android:layout_marginRight="16dp"
+            android:elevation="6dp"
             android:onClick="onClick"
             app:button_color="?attr/colorAccent"
             app:button_colorRipple="?attr/colorPrimary"
-            app:stroke_width="1.5dp"
-            app:stroke_color="?attr/colorPrimary"
             app:image="@drawable/ic_hotboot"
             app:image_size="27dp"
             app:rippleEffect_enabled="true"
             app:shadow_radius="0dp"
-            android:elevation="6dp" />
+            app:stroke_color="?attr/colorPrimary"
+            app:stroke_width="1.5dp" />
 
         <com.software.shell.fab.ActionButton
             android:id="@+id/action_reboot"
@@ -122,16 +122,16 @@
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="16dp"
             android:layout_marginRight="16dp"
+            android:elevation="6dp"
             android:onClick="onClick"
             app:button_color="?attr/colorPrimary"
             app:button_colorRipple="?attr/colorAccent"
-            app:stroke_width="1.5dp"
-            app:stroke_color="?attr/colorAccent"
             app:image="@drawable/ic_reboot"
             app:image_size="27dp"
             app:rippleEffect_enabled="true"
             app:shadow_radius="0dp"
-            android:elevation="6dp" />
+            app:stroke_color="?attr/colorAccent"
+            app:stroke_width="1.5dp" />
 
 
     </RelativeLayout>
