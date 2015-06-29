@@ -3,10 +3,12 @@ package com.wubydax.romcontrol;
 import android.content.Context;
 import android.preference.Preference;
 import android.preference.SwitchPreference;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedOutputStream;
@@ -61,24 +63,59 @@ public class FilePreference extends SwitchPreference implements CompoundButton.O
         super.onBindView(view);
         swView = (Switch) view.findViewById(R.id.fileSwitch);
         swView.setChecked(isOn);
+        String isOnValue = String.valueOf(isOn);
+        String persistedBoolValue = String.valueOf(getPersistedBoolean(false));
+        if (!isOnValue.equals(persistedBoolValue)) {
+            persistBoolean(isOn);
+        }
+        syncSummaryView(view);
         swView.setOnCheckedChangeListener(this);
-        CharSequence summary = isOn ? summaryOn : summaryOff;
-        setSummary(summary);
+
+        Toast.makeText(c, "Persisted boolean is " + String.valueOf(getPersistedBoolean(false)), Toast.LENGTH_SHORT).show();
     }
+
+    void syncSummaryView(View view) {
+        // Sync the summary view
+        TextView summaryView = (TextView) view.findViewById(android.R.id.summary);
+        if (summaryView != null) {
+            boolean useDefaultSummary = true;
+            if (isOn && !TextUtils.isEmpty(summaryOn)) {
+                summaryView.setText(summaryOn);
+                useDefaultSummary = false;
+            } else if (!isOn && !TextUtils.isEmpty(summaryOff)) {
+                summaryView.setText(summaryOff);
+                useDefaultSummary = false;
+            }
+            if (useDefaultSummary) {
+                final CharSequence summary = getSummary();
+                if (!TextUtils.isEmpty(summary)) {
+                    summaryView.setText(summary);
+                    useDefaultSummary = false;
+                }
+            }
+            int newVisibility = View.GONE;
+            if (!useDefaultSummary) {
+                // Someone has written to it
+                newVisibility = View.VISIBLE;
+            }
+            if (newVisibility != summaryView.getVisibility()) {
+                summaryView.setVisibility(newVisibility);
+            }
+        }
+    }
+
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         persistBoolean(isChecked);
+        notifyChanged();
     }
 
 
     @Override
     public boolean onPreferenceClick(Preference preference) {
-        Toast.makeText(c, "Preference clicked", Toast.LENGTH_SHORT).show();
         if (swView.isChecked()) {
             file.delete();
-            swView.setChecked(false);
-            setSummaryOn(summaryOn);
             isOn = false;
 
         } else {
@@ -90,10 +127,8 @@ public class FilePreference extends SwitchPreference implements CompoundButton.O
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            swView.setChecked(true);
-            setSummaryOff(summaryOff);
-            isOn = true;
         }
+        swView.setChecked(isOn);
         return true;
     }
 }

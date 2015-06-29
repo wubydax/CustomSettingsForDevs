@@ -1,6 +1,5 @@
 package com.wubydax.romcontrol;
 
-import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.ContentResolver;
@@ -8,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.preference.CheckBoxPreference;
@@ -19,8 +17,6 @@ import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.Toast;
 
@@ -176,25 +172,27 @@ public class HandlePreferenceFragments implements SharedPreferences.OnSharedPref
             Preference p = pf.findPreference(key);
 
             if (entry.getValue() instanceof Boolean) {
-                int prefInt;
-                int actualInt = 0;
-                boolean actualBoolean;
-                boolean boolValue = prefs.getBoolean(key, true);
+                if (p instanceof FilePreference) {
+                } else {
+                    int prefInt;
+                    int actualInt = 0;
+                    boolean actualBoolean;
+                    boolean boolValue = prefs.getBoolean(key, true);
 
-                prefInt = (boolValue) ? 1 : 0;
+                    prefInt = (boolValue) ? 1 : 0;
 
-                try {
-                    actualInt = Settings.System.getInt(cr, key);
-                } catch (Settings.SettingNotFoundException e) {
-                    Settings.System.putInt(cr, key, prefInt);
-                    actualInt = prefInt;
+                    try {
+                        actualInt = Settings.System.getInt(cr, key);
+                    } catch (Settings.SettingNotFoundException e) {
+                        Settings.System.putInt(cr, key, prefInt);
+                        actualInt = prefInt;
+                    }
+
+                    actualBoolean = (actualInt == 0) ? false : true;
+                    if (!String.valueOf(boolValue).equals(String.valueOf(actualBoolean))) {
+                        ed.putBoolean(key, actualBoolean).commit();
+                    }
                 }
-
-                actualBoolean = (actualInt == 0) ? false : true;
-                if (!String.valueOf(boolValue).equals(String.valueOf(actualBoolean))) {
-                    ed.putBoolean(key, actualBoolean).commit();
-                }
-//
             } else if (entry.getValue() instanceof Integer) {
                 int prefInt = prefs.getInt(key, 0);
                 int actualInt = 0;
@@ -318,7 +316,10 @@ public class HandlePreferenceFragments implements SharedPreferences.OnSharedPref
                 break;
         }
         /*Calling main method to handle updating database based on preference changes*/
-        updateDatabase(key, p, sharedPreferences);
+        if (p instanceof FilePreference) {
+        } else {
+            updateDatabase(key, p, sharedPreferences);
+        }
     }
 
     private void updateDatabase(String key, Object o, SharedPreferences sp) {
