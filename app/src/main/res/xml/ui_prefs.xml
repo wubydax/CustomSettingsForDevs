@@ -57,7 +57,11 @@
             setSeparatorString="\##"
             android:key="choosen_app_gear"
             android:title="Choose App" />
-
+        <com.wubydax.romcontrol.FilePreference
+            android:key="testfile"
+            android:summaryOff="File doesn't exist"
+            android:summaryOn="File exists"
+            android:title="Test File Preference" />
 
     </PreferenceCategory>
 
