@@ -70,8 +70,6 @@ public class FilePreference extends SwitchPreference implements CompoundButton.O
         }
         syncSummaryView(view);
         swView.setOnCheckedChangeListener(this);
-
-        Toast.makeText(c, "Persisted boolean is " + String.valueOf(getPersistedBoolean(false)), Toast.LENGTH_SHORT).show();
     }
 
     void syncSummaryView(View view) {
