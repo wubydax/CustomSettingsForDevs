@@ -44,4 +44,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="theme_chooser_dialog_title">Choose Theme</string>
+    <string name="app_reboot_required_title">App Reboot Required</string>
+    <string name="app_reboot_required_message">%1$s reboot is required for the changes to take effect.\n\nReboot now?</string>
 </resources>

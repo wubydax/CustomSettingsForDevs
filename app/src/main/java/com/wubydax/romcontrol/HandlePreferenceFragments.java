@@ -1,12 +1,15 @@
 package com.wubydax.romcontrol;
 
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.preference.CheckBoxPreference;
@@ -17,6 +20,8 @@ import android.preference.PreferenceScreen;
 import android.preference.SwitchPreference;
 import android.provider.Settings;
 import android.util.Log;
+import android.util.TypedValue;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.Toast;
 
@@ -408,7 +413,7 @@ public class HandlePreferenceFragments implements SharedPreferences.OnSharedPref
         return true;
     }
 
-//    private void setToolbarForNested(Preference p) {
+    //    private void setToolbarForNested(Preference p) {
 //        PreferenceScreen ps = (PreferenceScreen) p;
 //        Dialog d = ps.getDialog();
 //        android.support.v7.widget.Toolbar tb;
@@ -417,5 +422,60 @@ public class HandlePreferenceFragments implements SharedPreferences.OnSharedPref
 //        ll.addView(tb, 0);
 //
 //    }
+
+    /**
+     * This method can be useful for devs that wish to inform their users
+     * that reboot of an app is required fpr the changes to take effect.
+     * Some apps reboot quietly, but f.e SystemUI will reboot visibly.
+     * To inform user, you can call this method, and a popup, informing of what reboot is required, will be shown.
+     * Upon clicking ok button, the specified app will be killed.*/
+    public void appRebootRequired(final String pckgName) {
+        PackageManager pm = c.getPackageManager();
+        String appName = "";
+        Drawable appIcon = null;
+        try {
+            appName = pm.getApplicationInfo(pckgName, 0).loadLabel(pm).toString();
+            appIcon = pm.getApplicationInfo(pckgName, 0).loadIcon(pm);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        AlertDialog.Builder b = new AlertDialog.Builder(c);
+        b
+                .setTitle(c.getString(R.string.app_reboot_required_title).toUpperCase())
+                .setIcon(-1).setIcon(appIcon)
+                .setMessage(String.format(c.getString(R.string.app_reboot_required_message), appName))
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Command c = new Command(0, "pkill " + pckgName);
+                        try {
+                            RootTools.getShell(true).add(c);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (TimeoutException e) {
+                            e.printStackTrace();
+                        } catch (RootDeniedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+        AlertDialog d = b.create();
+        d.show();
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = c.getTheme();
+        theme.resolveAttribute(R.attr.colorAccent, typedValue, true);
+        Button cancel = d.getButton(AlertDialog.BUTTON_NEGATIVE);
+        Button ok = d.getButton(AlertDialog.BUTTON_POSITIVE);
+        cancel.setTextColor(typedValue.data);
+        ok.setTextColor(typedValue.data);
+        d.getWindow().setBackgroundDrawableResource(R.drawable.dialog_bg);
+
+    }
 
 }
