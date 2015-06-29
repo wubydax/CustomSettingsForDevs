@@ -47,11 +47,13 @@ public class FilePreference extends SwitchPreference implements CompoundButton.O
         key = getStringForAttr(attrs, defaultNameSpace, "key", "file");
         summaryOn = getStringForAttr(attrs, defaultNameSpace, "summaryOn", "");
         summaryOff = getStringForAttr(attrs, defaultNameSpace, "summaryOff", "");
+        //We will store our files inside package default files dir in /data/data/packagename/files
         file = new File(c.getFilesDir() + File.separator + key);
         isOn = file.exists() ? true : false;
         FilePreference.this.setOnPreferenceClickListener(this);
     }
 
+    //Method to get the strings we need from our xml attributes in default android name space
     private String getStringForAttr(AttributeSet attrs, String ns, String attrName, String defaultValue) {
         String value = attrs.getAttributeValue(ns, attrName);
         if (value == null)
@@ -73,8 +75,8 @@ public class FilePreference extends SwitchPreference implements CompoundButton.O
         swView.setOnCheckedChangeListener(this);
     }
 
+    //Sync summary on/off with persisted boolean in onBindView
     void syncSummaryView(View view) {
-        // Sync the summary view
         TextView summaryView = (TextView) view.findViewById(android.R.id.summary);
         if (summaryView != null) {
             boolean useDefaultSummary = true;
@@ -106,6 +108,7 @@ public class FilePreference extends SwitchPreference implements CompoundButton.O
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        //Once the switch has been switched on/off, persist the boolean into the preferences
         persistBoolean(isChecked);
         notifyChanged();
     }
@@ -114,10 +117,12 @@ public class FilePreference extends SwitchPreference implements CompoundButton.O
     @Override
     public boolean onPreferenceClick(Preference preference) {
         if (swView.isChecked()) {
+            //If switch is on, delete the file and switch it off
             file.delete();
             isOn = false;
 
         } else {
+            //If the switch is on, create the file and switch it off
             try {
                 file.createNewFile();
                 BufferedOutputStream fout = new BufferedOutputStream(new FileOutputStream(file), 16 * 1024);
