@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <com.wubydax.romcontrol.ColorPickerPreference
+    <com.wubydax.romcontrol.prefs.ColorPickerPreference
         android:key="dialer_num_color"
         android:title="Choose Dialer Num Color"
         android:defaultValue="-16777215"
@@ -11,7 +11,7 @@
         android:summaryOff="Call recording disabled"
         android:summaryOn="Callrecording enabled"
         android:title="Enable/Disable Call Recording" />
-    <com.wubydax.romcontrol.MyListPreference
+    <com.wubydax.romcontrol.prefs.MyListPreference
         android:defaultValue="2"
         android:entries="@array/some_entries"
         android:entryValues="@array/some_values"

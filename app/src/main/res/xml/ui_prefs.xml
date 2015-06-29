@@ -13,17 +13,17 @@
             android:summaryOff="Brightness slider hidden"
             android:summaryOn="Brightness slider is visible"
             android:title="Notification Brightness Visibility" />
-        <com.wubydax.romcontrol.MyListPreference
+        <com.wubydax.romcontrol.prefs.MyListPreference
             android:defaultValue="2"
             android:entries="@array/clock_position_entries"
             android:entryValues="@array/clock_position_values"
             android:key="any_clock_position"
             android:title="Status Bar Clock Position" />
-        <com.wubydax.romcontrol.MyEditTextPreference
+        <com.wubydax.romcontrol.prefs.MyEditTextPreference
             android:defaultValue="simpletext"
             android:key="carrier_text"
             android:title="Set Custom Carrier Text" />
-        <com.wubydax.romcontrol.ColorPickerPreference
+        <com.wubydax.romcontrol.prefs.ColorPickerPreference
             alphaSlider="true"
             android:defaultValue="-16777215"
             android:key="clock_color"
@@ -32,7 +32,7 @@
             android:key="script#test"
             android:summary="Click see what happens"
             android:title="New Preference Screen" />
-        <com.wubydax.romcontrol.SeekBarPreference
+        <com.wubydax.romcontrol.prefs.SeekBarPreference
             min="0"
             unitsRight="Kb/s"
             android:defaultValue="10"
@@ -52,12 +52,12 @@
                 android:key="test_switch"
                 android:title="Switch" />
         </PreferenceScreen>
-        <com.wubydax.romcontrol.IntentDialogPreference
+        <com.wubydax.romcontrol.prefs.IntentDialogPreference
             includeSearch="true"
             setSeparatorString="\##"
             android:key="choosen_app_gear"
             android:title="Choose App" />
-        <com.wubydax.romcontrol.FilePreference
+        <com.wubydax.romcontrol.prefs.FilePreference
             android:key="testfile"
             android:summaryOff="File doesn't exist"
             android:summaryOn="File exists"

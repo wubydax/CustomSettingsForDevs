@@ -28,6 +28,12 @@ import android.widget.Toast;
 import com.stericson.RootShell.exceptions.RootDeniedException;
 import com.stericson.RootShell.execution.Command;
 import com.stericson.RootTools.RootTools;
+import com.wubydax.romcontrol.prefs.ColorPickerPreference;
+import com.wubydax.romcontrol.prefs.FilePreference;
+import com.wubydax.romcontrol.prefs.IntentDialogPreference;
+import com.wubydax.romcontrol.prefs.MyEditTextPreference;
+import com.wubydax.romcontrol.prefs.MyListPreference;
+import com.wubydax.romcontrol.prefs.SeekBarPreference;
 
 import java.io.File;
 import java.io.IOException;

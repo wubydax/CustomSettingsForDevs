@@ -26,7 +26,7 @@
         android:key="com.bogus.bogus"
         android:summary="Tries to open bogus app"
         android:title="Open bogus app" />
-    <com.wubydax.romcontrol.MyListPreference
+    <com.wubydax.romcontrol.prefs.MyListPreference
         android:defaultValue="2"
         android:entries="@array/some_entries"
         android:entryValues="@array/some_values"
