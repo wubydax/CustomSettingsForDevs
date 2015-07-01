@@ -54,6 +54,7 @@ public class ColorPickerPreference
     private boolean mAlphaSliderEnabled = false;
     private boolean mHexValueEnabled = false;
     private int dialog_bg;
+    private String mHexDefaultValue;
 
     public ColorPickerPreference(Context context) {
         super(context);
@@ -72,7 +73,15 @@ public class ColorPickerPreference
 
     @Override
     protected Object onGetDefaultValue(TypedArray a, int index) {
-        return a.getColor(index, Color.BLACK);
+        int colorInt = 0;
+        mHexDefaultValue = a.getString(index);
+        if (mHexDefaultValue != null) {
+            colorInt = convertToColorInt(mHexDefaultValue);
+            return colorInt;
+
+        } else {
+            return a.getColor(index, Color.BLACK);
+        }
     }
 
     @Override
@@ -85,8 +94,16 @@ public class ColorPickerPreference
         setOnPreferenceClickListener(this);
         if (attrs != null) {
             mAlphaSliderEnabled = attrs.getAttributeBooleanValue(null, "alphaSlider", false);
-            mHexValueEnabled = attrs.getAttributeBooleanValue(null, "hexValue", false);
+
         }
+    }
+
+    //Method to get the strings we need from our xml attributes in default android name space
+    private String getStringForAttr(AttributeSet attrs, String ns, String attrName, String defaultValue) {
+        String value = attrs.getAttributeValue(ns, attrName);
+        if (value == null)
+            value = defaultValue;
+        return value;
     }
 
 

@@ -25,7 +25,7 @@
             android:title="Set Custom Carrier Text" />
         <com.wubydax.romcontrol.prefs.ColorPickerPreference
             alphaSlider="true"
-            android:defaultValue="-16777215"
+            android:defaultValue="#ffff0000"
             android:key="clock_color"
             android:title="Choose Clock Color" />
         <PreferenceScreen
