@@ -36,6 +36,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.software.shell.fab.ActionButton;
 import com.stericson.RootShell.exceptions.RootDeniedException;
@@ -338,26 +339,72 @@ public class MainViewActivity extends AppCompatActivity
                 mNoSu.show();
 
 
-            }else{
-            //Provided the su privileges have been established, we run the activity as usual, beginning with setting content view
-            setContentView(R.layout.activity_main_view);
-            mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
-            setSupportActionBar(mToolbar);
+            } else {
+                //Provided the su privileges have been established, we run the activity as usual, beginning with setting content view
+                setContentView(R.layout.activity_main_view);
+                mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
+                setSupportActionBar(mToolbar);
 
-            mNavigationDrawerFragment = (NavigationDrawerFragment)
-                    getFragmentManager().findFragmentById(R.id.fragment_drawer);
+                mNavigationDrawerFragment = (NavigationDrawerFragment)
+                        getFragmentManager().findFragmentById(R.id.fragment_drawer);
 
-            // Set up the drawer. Look in NavigationDrawerFragment for more details
-            mNavigationDrawerFragment.setup(R.id.fragment_drawer, (DrawerLayout) findViewById(R.id.drawer), mToolbar, MainViewActivity.this);
-            initRebootMenu();
-            am = getAssets();
-            //Calling the helper class HandleScripts to copy scripts to the files folder and chmod 755.
-            //Scripts can be then accessed and executed using script#scriptname key for PreferenceScreen in PreferenceFragments
-            hs = new HandleScripts(MainViewActivity.this);
-            hs.copyAssetFolder();
+                // Set up the drawer. Look in NavigationDrawerFragment for more details
+                mNavigationDrawerFragment.setup(R.id.fragment_drawer, (DrawerLayout) findViewById(R.id.drawer), mToolbar, MainViewActivity.this);
+                initRebootMenu();
+                am = getAssets();
+                //Calling the helper class HandleScripts to copy scripts to the files folder and chmod 755.
+                //Scripts can be then accessed and executed using script#scriptname key for PreferenceScreen in PreferenceFragments
+                hs = new HandleScripts(MainViewActivity.this);
+                hs.copyAssetFolder();
+                try {
+                    remountSystem("rw");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
 
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        try {
+            remountSystem("rw");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        try {
+            remountSystem("ro");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            remountSystem("ro");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void remountSystem(String mount) throws Exception {
+        String system = "/system";
+        String mounted = RootTools.getMountedAs(system);
+        boolean isMountedRW = mounted.equals("rw") ? true : false;
+        if (isMountedRW && mount.equals("ro")) {
+            RootTools.remount(system, "ro");
+        } else if(!isMountedRW && mount.equals("rw")){
+            RootTools.remount(system, "rw");
         }
     }
 }
