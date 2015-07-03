@@ -74,15 +74,7 @@ public class ColorPickerPreference
     //Added the ability to set defaultValue as hex string
     @Override
     protected Object onGetDefaultValue(TypedArray a, int index) {
-        int colorInt;
-        String mHexDefaultValue = a.getString(index);
-        if (mHexDefaultValue != null) {
-            colorInt = convertToColorInt(mHexDefaultValue);
-            return colorInt;
-
-        } else {
-            return a.getColor(index, Color.BLACK);
-        }
+        return a.getColor(index, Color.BLACK);
     }
 
     @Override
