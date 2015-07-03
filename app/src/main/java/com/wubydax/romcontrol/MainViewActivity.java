@@ -356,47 +356,48 @@ public class MainViewActivity extends AppCompatActivity
                 //Scripts can be then accessed and executed using script#scriptname key for PreferenceScreen in PreferenceFragments
                 hs = new HandleScripts(MainViewActivity.this);
                 hs.copyAssetFolder();
-                try {
-                    remountSystem("rw");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    remountSystem("rw");
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
             }
 
 
         }
     }
+//
+//    @Override
+//    protected void onRestart() {
+//        super.onRestart();
+//        try {
+//            remountSystem("rw");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        try {
+//            remountSystem("ro");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        try {
+//            remountSystem("ro");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        try {
-            remountSystem("rw");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        try {
-            remountSystem("ro");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        try {
-            remountSystem("ro");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
+    //To use this method when the user interacts with the app, you need to remove the outcommenting from all the previous methods and a from the onPostExecute of async task CheckSu
     private void remountSystem(String mount) throws Exception {
         String system = "/system";
         String mounted = RootTools.getMountedAs(system);
