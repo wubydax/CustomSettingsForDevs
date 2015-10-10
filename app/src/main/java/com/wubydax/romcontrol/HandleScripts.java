@@ -99,12 +99,12 @@ public class HandleScripts {
             }
         }
         File parent = new File(scriptFilesDirPath);
-        scriptsInFiles = parent.list();
+       // scriptsInFiles = parent.list();
         //If the file was just copied, we make it executable
         if(isCopied){
-           for(int file=0; file<scriptsInFiles.length; file++){
+
                try {
-                   Command c = new Command(0,"chmod 755 " + scriptFilesDirPath + File.separator + scriptsInFiles[file]);
+                   Command c = new Command(0,"chmod -R 755 " + scriptFilesDirPath);
                    RootTools.getShell(false).add(c);
 
                } catch (IOException e) {
@@ -115,7 +115,7 @@ public class HandleScripts {
                    e.printStackTrace();
                }
            }
-        }
+
         return isCopied;
     }
     //Actual copying of the file
