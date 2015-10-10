@@ -296,8 +296,9 @@ public class MainViewActivity extends AppCompatActivity
     }
 
     //Asynchronous class to ask for su rights at the beginning of the activity. If the root rights have been denied or the device is not rooted, the app will not run.
-    public class CheckSu extends AsyncTask<String, Integer, Boolean> {
+    public class CheckSu extends AsyncTask<Void, Void, Boolean> {
         ProgressDialog mProgressDialog;
+
 
         @Override
         protected void onPreExecute() {
@@ -308,10 +309,16 @@ public class MainViewActivity extends AppCompatActivity
         }
 
         @Override
-        protected Boolean doInBackground(String... params) {
+        protected Boolean doInBackground(Void... voids) {
             //Accessing the ability of the device to get root and the ability of app to achieve su privileges.
             if (RootTools.isAccessGiven()) {
-                return null;
+                am = getAssets();
+                //Calling the helper class HandleScripts to copy scripts to the files folder and chmod 755.
+                //Scripts can be then accessed and executed using script#scriptname key for PreferenceScreen in PreferenceFragments
+                hs = new HandleScripts(MainViewActivity.this);
+                hs.copyAssetFolder();
+                return true;
+
 
             } else {
                 return false;
@@ -323,7 +330,7 @@ public class MainViewActivity extends AppCompatActivity
             mProgressDialog.dismiss();
             //If the device is not rooted or su has been denied the app will not run.
             //A dialog will be shown announcing that with a single button, upon clicking which the activity will finish.
-            if (!RootTools.isAccessGiven()) {
+            if (!result) {
                 //If no su access detected, throw and alert dialog with single button that will finish the activity
                 AlertDialog.Builder mNoSuBuilder = new AlertDialog.Builder(MainViewActivity.this);
                 mNoSuBuilder.setTitle(R.string.missing_su_title);
@@ -351,11 +358,7 @@ public class MainViewActivity extends AppCompatActivity
                 // Set up the drawer. Look in NavigationDrawerFragment for more details
                 mNavigationDrawerFragment.setup(R.id.fragment_drawer, (DrawerLayout) findViewById(R.id.drawer), mToolbar, MainViewActivity.this);
                 initRebootMenu();
-                am = getAssets();
-                //Calling the helper class HandleScripts to copy scripts to the files folder and chmod 755.
-                //Scripts can be then accessed and executed using script#scriptname key for PreferenceScreen in PreferenceFragments
-                hs = new HandleScripts(MainViewActivity.this);
-                hs.copyAssetFolder();
+
 //                try {
 //                    remountSystem("rw");
 //                } catch (Exception e) {

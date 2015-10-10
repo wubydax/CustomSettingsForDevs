@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Custom-Settings-for-Devs.iml" filepath="$PROJECT_DIR$/Custom-Settings-for-Devs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CustomSettingsForDevs.iml" filepath="$PROJECT_DIR$/CustomSettingsForDevs.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
